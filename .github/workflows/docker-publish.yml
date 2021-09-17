@@ -42,7 +42,7 @@ jobs:
             [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
       - name: test version
         run: |
-          echo $VERSION
+          # echo $VERSION
           echo "THIS VERSION ${{VERSION}}"
       - name: Set Docker metadata
         id: docker_meta
