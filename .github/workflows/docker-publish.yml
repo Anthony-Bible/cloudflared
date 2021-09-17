@@ -34,6 +34,16 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
 
+      - name: set version
+        run : |
+            VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+            # Strip "v" prefix from tag name
+            [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+      - name: test version
+        run: |
+          echo $VERSION
+          echo "THIS VERSION ${{VERSION}}"
       - name: Set Docker metadata
         id: docker_meta
         uses: docker/metadata-action@v3
@@ -43,7 +53,7 @@ jobs:
             org.opencontainers.image.version=$VERSION
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.title=${{ env.REPOSITORY }}
-
+x
 
       - name: DockerHub login
         if: ${{ github.event_name != 'pull_request' }}
@@ -62,6 +72,7 @@ jobs:
           cache-to: type=gha, scope=${{ github.workflow }}
           labels: ${{ steps.docker_meta.outputs.labels }}
           tags: |
+          
             ${{ env.REPOSITORY }}:${{ env.BUILD_VERSION }}
             ${{ env.REPOSITORY }}:latest
             ghcr.io/${{ env.REPOSITORY }}:${{ env.BUILD_VERSION }}
