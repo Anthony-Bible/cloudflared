@@ -13,7 +13,7 @@ env:
   # BUILD_VERSION: "2021.9.0"
   IMAGE_NAME: cloudflared
   DOCKER_CLI_EXPERIMENTAL: enabled
-  REPOSITORY: ${{ github.actor }}/${{ github.workflow }} 
+  REPOSITORY: gimpyb/${{ github.workflow }} 
 
 jobs:
   # Push image to GitHub Packages.
