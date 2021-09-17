@@ -10,7 +10,7 @@ on:
     tags:
       - v*
 env:
-  BUILD_VERSION: "2021.9.0"
+  # BUILD_VERSION: "2021.9.0"
   IMAGE_NAME: cloudflared
   DOCKER_CLI_EXPERIMENTAL: enabled
   REPOSITORY: ${{ github.actor }}/${{ github.workflow }} 
@@ -20,7 +20,7 @@ jobs:
   # See also https://docs.docker.com/docker-hub/builds/
   push:
     # Ensure test job passes before pushing image.
-    runs-on: ubuntu:20.04
+    runs-on: ubuntu-latest
     if: ${{ github.event_name != 'pull_request' }}
     steps:
       - name: Source checkout
