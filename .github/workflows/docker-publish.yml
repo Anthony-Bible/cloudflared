@@ -53,8 +53,6 @@ jobs:
             org.opencontainers.image.version=$VERSION
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.title=${{ env.REPOSITORY }}
-x
-
       - name: DockerHub login
         if: ${{ github.event_name != 'pull_request' }}
         uses: docker/login-action@v1.10.0
