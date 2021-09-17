@@ -10,7 +10,7 @@ on:
     tags:
       - v*
 env:
-  # BUILD_VERSION: "2021.9.0"
+  BUILD_VERSION: ${{ github.ref }}
   IMAGE_NAME: cloudflared
   DOCKER_CLI_EXPERIMENTAL: enabled
   REPOSITORY: gimpyb/${{ github.workflow }} 
@@ -62,7 +62,7 @@ jobs:
           cache-to: type=gha, scope=${{ github.workflow }}
           labels: ${{ steps.docker_meta.outputs.labels }}
           tags: |
-            docker.io/${{ env.REPOSITORY }}:${{ env.BUILD_VERSION }}
-            docker.io/${{ env.REPOSITORY }}:latest
+            ${{ env.REPOSITORY }}:${{ env.BUILD_VERSION }}
+            ${{ env.REPOSITORY }}:latest
             ghcr.io/${{ env.REPOSITORY }}:${{ env.BUILD_VERSION }}
             ghcr.io/${{ env.REPOSITORY }}:latest
