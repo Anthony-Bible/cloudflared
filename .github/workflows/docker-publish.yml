@@ -40,7 +40,9 @@ jobs:
 
             # Strip "v" prefix from tag name
             [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-            echo "nice"
+            #Create a GA variable to use in other steps
+            echo "::set-env name=VERSION::$VERSION"
+
       - name: test version
         run: |
           echo $VERSION
