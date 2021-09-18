@@ -13,7 +13,7 @@ env:
   BUILD_VERSION: ${{ github.ref }}
   IMAGE_NAME: cloudflared
   DOCKER_CLI_EXPERIMENTAL: enabled
-  REPOSITORY: gimpyb/${{ github.workflow }} 
+  REPOSITORY: ${{ github.actor }}/${{ github.workflow }}
 
 jobs:
   # Push image to GitHub Packages.
@@ -37,9 +37,9 @@ jobs:
       - name: set version
         run : |
             VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-            # Strip "v" prefix from tag name
-            [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+            REPOSITORY=$(echo $REPOSITORY | tr '[A-Z]' '[a-z]') #make all lowercase
+            # Strip "v" prefix from tag name or use short sha 
+            [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//') || VERSION=$(git rev-parse --short "$GITHUB_SHA")
             #Create a GA variable to use in other steps
             echo "app_version=$VERSION" >> $GITHUB_ENV
 
