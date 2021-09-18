@@ -6,9 +6,8 @@ on:
     branches:
       - master
 
-    # Publish `v1.2.3` tags as releases.
-    tags:
-      - v*
+  release:
+    types: [published]
 env:
   BUILD_VERSION: ${{ github.ref }}
   IMAGE_NAME: cloudflared
@@ -83,6 +82,8 @@ jobs:
           labels: ${{ steps.docker_meta.outputs.labels }}
           tags: |
           
+            # ${{env.REPOSITORY}}:${{ env.app_version }}
+            # ${{env.REPOSITORY}}:latest
             gimpyb/cloudflared:${{ env.app_version }}
             gimpyb/cloudflared:latest
             ghcr.io/${{ env.REPOSITORY }}:${{ env.app_version }}
