@@ -56,6 +56,14 @@ jobs:
             org.opencontainers.image.version=${{env.app_version }}
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.title=${{ env.REPOSITORY }}
+
+      - name: GitHub login
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: docker/login-action@v1.10.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: DockerHub login
         if: ${{ github.event_name != 'pull_request' }}
         uses: docker/login-action@v1.10.0
